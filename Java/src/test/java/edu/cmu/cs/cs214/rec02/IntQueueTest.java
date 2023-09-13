@@ -33,8 +33,8 @@ public class IntQueueTest {
     @Before
     public void setUp() {
         // comment/uncomment these lines to test each class
-        mQueue = new LinkedIntQueue();
-//        mQueue = new ArrayIntQueue();
+//        mQueue = new LinkedIntQueue();
+       mQueue = new ArrayIntQueue();
 
         testList = new ArrayList<>(List.of(1, 2, 3));
     }
@@ -78,6 +78,7 @@ public class IntQueueTest {
             assertEquals(testList.get(i), mQueue.dequeue());
             assertEquals(testList.size() - i - 1, mQueue.size());
         }
+        assertEquals(null, mQueue.dequeue());
     }
 
     @Test
@@ -100,5 +101,43 @@ public class IntQueueTest {
         }
     }
 
+    @Test
+    public void testClear() {
+        testList.forEach(n -> mQueue.enqueue(n));
+        assertEquals(testList.get(0), mQueue.peek());
+        assertEquals(testList.size(), mQueue.size());
+        mQueue.clear();
+        assertEquals(null, mQueue.peek());
+        assertEquals(null, mQueue.dequeue());
+    }
+
+    @Test
+    public void testCobmination() {
+        testList.forEach(n -> mQueue.enqueue(n));
+        assertEquals(testList.get(0), mQueue.dequeue());
+        mQueue.dequeue();
+        Integer insert = 4;
+        mQueue.enqueue(4);
+        mQueue.dequeue();
+        assertEquals(insert, mQueue.dequeue());
+        //assertEquals(insert, mQueue.peek());
+        assertEquals(0, mQueue.size());
+        //assertEquals(insert, mQueue.dequeue());
+        
+    }
+
+    @Test
+    public void testCapacity() {
+        testList.forEach(n -> mQueue.enqueue(n));
+        assertEquals(testList.get(0), mQueue.dequeue());
+        testList.forEach(n -> mQueue.enqueue(n));
+        testList.forEach(n -> mQueue.enqueue(n));
+        testList.forEach(n -> mQueue.enqueue(n)); // this should exceed initial length limit as 10
+        assertEquals(testList.get(1), mQueue.dequeue());
+        //assertEquals(insert, mQueue.peek());
+        assertEquals(10, mQueue.size());
+        //assertEquals(insert, mQueue.dequeue());
+        
+    }
 
 }
